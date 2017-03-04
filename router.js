@@ -43,8 +43,8 @@ router.get('/otp',function(req,res){
 });
 
 router.post('/otp',function(req,res){
-
-  console.log(req.cookies);
+  console.log(req.headers);
+  console.log('otp cookie',req.cookies);
   if (req.cookies.MRHSession) {
     const reqOptions = {
       url: 'http://10.241.99.41:8080/otp',
@@ -62,7 +62,7 @@ router.post('/otp',function(req,res){
       console.log(response.headers);
       switch (response.headers.otp) {
         case 'ok':
-          res.status(200).send('Success');
+          res.sendFile(path.join(__dirname+'/html/internal.html'));
           break;
         case 'bad':
           res.redirect('/otp');
