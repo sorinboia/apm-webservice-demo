@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <head>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
 
   <script>
 
@@ -105,10 +106,22 @@
   </style>
 </head>
 <body>
-  <form action="/otp" method="POST">
+  <form id="myform" action="/otp" method="POST">
     <h2><span class="entypo-login"></span> OTP</h2>
     <button class="submit"><span class="entypo-lock"></span></button>
     <span class="entypo-user inputUserIcon"></span>
     <input type="text" name="otp" class="user" placeholder="OTP"/>
   </form>
+  <script>
+    if ($.cookie('error_msg')) {
+
+      var msg = $.cookie('error_msg');
+      $.removeCookie('error_msg');
+
+      var error_msg = document.createElement('div');
+      error_msg.innerText = msg;
+      error_msg.style = 'color:red;text-align:center';
+      document.getElementById('myform').appendChild(error_msg);
+    }
+  </script>
 </body>

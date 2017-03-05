@@ -29,11 +29,11 @@ router.post('/login',function(req,res){
         const cookieValue = cookie.split('=')[1].split(';')[0];
         res.cookie(cookieName,cookieValue);
       });
-
       res.redirect('/otp');
     }
     else {
-      res.redirect('/login');
+      res.cookie('error_msg','Bad credentials');
+      res.sendFile(path.join(__dirname+'/html/login.html'));
     }
   });
 });
@@ -63,7 +63,8 @@ router.post('/otp',function(req,res){
           res.redirect('/internal');
           break;
         case 'bad':
-          res.redirect('/otp');
+          res.cookie('error_msg','Bad OTP');
+          res.sendFile(path.join(__dirname+'/html/otp.html'));
           break;
         default:
           res.clearCookie('LastMRH_Session');
